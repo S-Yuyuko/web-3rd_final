@@ -36,7 +36,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`w-full p-4 flex items-center justify-between z-50 transform ${
+      className={`w-full p-4 flex items-center justify-between z-20 transform ${
         isScrolled
           ? "sticky top-0 bg-white/50 dark:bg-black/50 backdrop-blur-lg shadow-md text-gray-900 dark:text-gray-100"
           : "relative bg-white dark:bg-black text-gray-900 dark:text-gray-100 shadow-md"

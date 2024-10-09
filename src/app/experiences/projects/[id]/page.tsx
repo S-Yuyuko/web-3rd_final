@@ -41,7 +41,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
       {/* New Rain Effect */}
       <RainEffect />
 
-      <div className="p-6 max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 relative z-10">
+      <div className="p-6 max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 relative">
         {/* Left-Aligned Back Arrow Section */}
         <div className="flex justify-start mb-4">
           <Link

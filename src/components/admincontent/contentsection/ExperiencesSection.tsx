@@ -61,9 +61,7 @@ const ProjectForm = ({
   const handleMediaPreview = (preview: string | File) => {
     // Check if the media is from the server or locally uploaded (blob URL)
     if (typeof preview === 'string') {
-      return preview.includes('blob') || !isEdit
-        ? preview // Local blob URL or new media
-        : `${process.env.NEXT_PUBLIC_API_URL}/${preview.replace(/\\/g, '/')}`; // Server media
+      return preview
     }
     return URL.createObjectURL(preview); // Preview for File objects
   };
@@ -194,9 +192,7 @@ const ProfessionalForm = ({
   const handleMediaPreview = (preview: string | File) => {
     // Check if the media is from the server or locally uploaded (blob URL)
     if (typeof preview === 'string') {
-      return preview.includes('blob') || !isEdit
-        ? preview // Local blob URL or new media
-        : `${process.env.NEXT_PUBLIC_API_URL}/${preview.replace(/\\/g, '/')}`; // Server media
+      return preview
     }
     return URL.createObjectURL(preview); // Preview for File objects
   };

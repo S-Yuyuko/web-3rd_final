@@ -32,6 +32,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ mediaUrls = [] }) => { // D
   };
 
   return (
+    <>
     <div className="mt-8">
       <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">Media</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -42,7 +43,7 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ mediaUrls = [] }) => { // D
             onClick={() => openImage(index)}
           >
             <Image
-              src={`${url}`}
+              src={url}
               alt={`Media ${index + 1}`}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -53,53 +54,53 @@ const MediaGallery: React.FC<MediaGalleryProps> = ({ mediaUrls = [] }) => { // D
           </div>
         ))}
       </div>
-
-      {/* Fullscreen Image Modal */}
-      {selectedImageIndex !== null && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center"
-          onClick={closeImage}
-        >
-          <div className="relative w-full h-full">
-            <Image
-              src={`${mediaUrls[selectedImageIndex]}`}
-              alt="Full size"
-              layout="fill"
-              objectFit="contain"
-              className="rounded-md"
-            />
-          </div>
-          <button
-            onClick={closeImage}
-            className="absolute top-4 right-4 rounded-full p-2 focus:outline-none text-white"
-          >
-            <FaTimes className="w-6 h-6" />
-          </button>
-          {selectedImageIndex > 0 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                showPrevImage();
-              }}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-2xl"
-            >
-              <FaArrowLeft />
-            </button>
-          )}
-          {selectedImageIndex < mediaUrls.length - 1 && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                showNextImage();
-              }}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-2xl"
-            >
-              <FaArrowRight />
-            </button>
-          )}
-        </div>
-      )}
     </div>
+    {/* Fullscreen Image Modal */}
+    {selectedImageIndex !== null && (
+      <div
+        className="fixed inset-0 bg-black bg-opacity-80 z-30 justify-center items-center"
+        onClick={closeImage}
+      >
+        <div className="relative w-full h-full">
+          <Image
+            src={mediaUrls[selectedImageIndex]}
+            alt="Full size"
+            layout="fill"
+            objectFit="contain"
+            className="rounded-md"
+          />
+        </div>
+        <button
+          onClick={closeImage}
+          className="absolute top-4 right-4 rounded-full p-2 focus:outline-none text-white"
+        >
+          <FaTimes className="w-6 h-6" />
+        </button>
+        {selectedImageIndex > 0 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              showPrevImage();
+            }}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-2xl"
+          >
+            <FaArrowLeft />
+          </button>
+        )}
+        {selectedImageIndex < mediaUrls.length - 1 && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              showNextImage();
+            }}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-2xl"
+          >
+            <FaArrowRight />
+          </button>
+        )}
+      </div>
+    )}
+    </>
   );
 };
 

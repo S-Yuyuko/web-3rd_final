@@ -110,7 +110,7 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
                     <tr key={picture.name} className="align-middle">
                       <td className="border px-4 py-2 align-middle flex justify-center items-center">
                         <Image
-                          src={`${picture.path}`}
+                          src={picture.path}
                           alt={picture.name}
                           width={100}
                           height={100}
@@ -150,7 +150,10 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
       {renderSubContent()}
 
       {isModalOpen && selectedImage && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-80 z-30 flex justify-center items-center"
+          onClick={closeModal}
+        >
           <div className="relative w-full h-full">
             <Image
               src={selectedImage}

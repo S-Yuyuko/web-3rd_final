@@ -46,7 +46,7 @@ export default async function Experiences() {
       <SnowEffect />
 
       {/* Main Content */}
-      <section className="relative z-10 flex flex-col items-center justify-center h-screen">
+      <section className="relative flex flex-col items-center justify-center h-screen">
         <ExperienceWord title={experienceWord.title} description={experienceWord.description} />
       </section>
       

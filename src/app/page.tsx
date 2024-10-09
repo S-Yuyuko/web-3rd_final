@@ -34,7 +34,7 @@ export default async function Home() {
       <BubbleEffect />
       <SlideShow pictures={pictures} />
 
-      <section className="relative z-10 flex flex-col items-center justify-center h-screen">
+      <section className="relative flex flex-col items-center justify-center h-screen">
         <HomeWords title={title} description={description} />
       </section>
     </main>

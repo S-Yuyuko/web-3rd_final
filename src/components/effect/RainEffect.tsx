@@ -4,7 +4,7 @@ import React from 'react';
 
 const RainEffect = () => {
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 z--1 overflow-hidden pointer-events-none">
       {Array.from({ length: 100 }).map((_, index) => (
         <div
           key={index}

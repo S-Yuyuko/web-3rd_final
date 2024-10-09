@@ -39,7 +39,7 @@ const HomeWords = ({ title, description }: HomeWordsProps) => {
   return (
     <div
       ref={ref}
-      className={`relative z-10 text-center transition-opacity duration-1000 transform ${
+      className={`relative z-1 text-center transition-opacity duration-1000 transform ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       }`}
     >

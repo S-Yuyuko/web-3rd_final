@@ -15,7 +15,7 @@ export type Professional = {
 // Fetch all professionals
 export const fetchProfessionals = async (): Promise<Professional[] | null> => {
   try {
-    const { data } = await axios.get<Professional[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals`);
+    const { data } = await axios.get<Professional[]>(`api/professionals`);
     return data;
   } catch (error) {
     handleAxiosError(error, 'Failed to fetch professionals.');
@@ -27,7 +27,7 @@ export const fetchProfessionals = async (): Promise<Professional[] | null> => {
 export const addProfessional = async (professional: Partial<Professional>, mediaFiles: File[]): Promise<Professional | null> => {
   try {
     const formData = createProfessionalFormData(professional, mediaFiles);
-    const { data } = await axios.post<Professional>(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals`, formData, {
+    const { data } = await axios.post<Professional>(`api/professionals`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -56,7 +56,7 @@ export const updateProfessional = async (id: string, professional: Partial<Profe
     await appendBlobUrlsToFormData(blobUrls, formData);
 
     // Make the PUT request to update the professional
-    const { data } = await axios.put<Professional>(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/${id}`, formData, {
+    const { data } = await axios.put<Professional>(`api/professionals/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -72,7 +72,7 @@ export const updateProfessional = async (id: string, professional: Partial<Profe
 // Delete a professional by ID
 export const deleteProfessional = async (id: string): Promise<boolean> => {
   try {
-    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/${id}`);
+    await axios.delete(`api/professionals/${id}`);
     return true;
   } catch (error) {
     handleAxiosError(error, 'Failed to delete professional.');

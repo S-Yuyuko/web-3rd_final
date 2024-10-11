@@ -4,7 +4,7 @@ import axios from 'axios';
 export const addContactEntry = async (entry: { id: string; phone: string; email: string; linkedin: string; github: string }): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`, entry, {
+    await axios.post(`api/contact`, entry, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
@@ -16,7 +16,7 @@ export const addContactEntry = async (entry: { id: string; phone: string; email:
 // Fetch all contact entries
 export const getContactEntries = async (): Promise<any[]> => {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/contact`);
+    const response = await axios.get(`api/contact`);
     return response.data.contact; // Assuming backend returns { contact: [...] }
   } catch (error) {
     console.error('Failed to fetch contact entries:', error);
@@ -28,7 +28,7 @@ export const getContactEntries = async (): Promise<any[]> => {
 export const updateContactEntry = async (id: string, entry: { phone: string; email: string; linkedin: string; github: string }): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/contact/${id}`, entry, {
+    await axios.put(`api/contact/${id}`, entry, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

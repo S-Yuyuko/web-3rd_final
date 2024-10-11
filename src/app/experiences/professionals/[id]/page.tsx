@@ -7,7 +7,7 @@ import RainEffect from '@/components/effect/RainEffect'; // Ensure this path is 
 // Function to fetch professional data from the API
 async function fetchProfessionalData(id: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/${id}`, {
+    const res = await fetch(`api/professionals/${id}`, {
       cache: 'no-store', // Always fetch fresh data, disabling caching
     });
 

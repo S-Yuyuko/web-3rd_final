@@ -9,9 +9,9 @@ export const revalidate = 60;
 async function fetchAllData() {
   try {
     const [projectsRes, professionalsRes, experienceWordRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/summaries`, { next: { revalidate: 60 } }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/summaries`, { next: { revalidate: 60 } }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/experiencewords`, { next: { revalidate: 60 } }),
+      fetch(`api/projects/summaries`, { next: { revalidate: 60 } }),
+      fetch(`api/professionals/summaries`, { next: { revalidate: 60 } }),
+      fetch(`api/experiencewords`, { next: { revalidate: 60 } }),
     ]);
 
     // Check if any of the responses are not okay

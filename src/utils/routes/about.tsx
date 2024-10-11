@@ -4,7 +4,7 @@ import axios from 'axios';
 export const addAboutEntry = async (entry: { id: string; information: string; skills: string; education: string }): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/about`, entry, {
+    await axios.post(`api/about`, entry, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
@@ -17,7 +17,7 @@ export const addAboutEntry = async (entry: { id: string; information: string; sk
 export const getAboutEntries = async (): Promise<any[]> => {
   try {
     // Use NEXT_PUBLIC_API_URL for API calls
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/about`);
+    const response = await axios.get(`api/about`);
     return response.data.about; // Assuming backend returns { about: [...] }
   } catch (error) {
     throw new Error('Failed to fetch about entries.');
@@ -28,7 +28,7 @@ export const getAboutEntries = async (): Promise<any[]> => {
 export const updateAboutEntry = async (id: string, entry: { information: string; skills: string; education: string }): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/about/${id}`, entry, {
+    await axios.put(`api/about/${id}`, entry, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

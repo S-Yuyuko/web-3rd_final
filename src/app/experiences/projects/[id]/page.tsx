@@ -7,7 +7,7 @@ import RainEffect from '@/components/effect/RainEffect'; // Ensure this path is 
 // Function to fetch project data from the API
 async function fetchProjectData(id: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`, {
+    const res = await fetch(`api/projects/${id}`, {
       cache: 'no-store', // Always fetch fresh data, disabling any caching
     });
 

@@ -25,8 +25,8 @@ interface SlidesData {
 async function fetchData() {
   try {
     const [wordsResponse, slidesResponse] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords`, { next: { revalidate: 60 } }),
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slides`, { next: { revalidate: 60 } }),
+      fetch(`api/homewords`, { next: { revalidate: 60 } }),
+      fetch(`api/slides`, { next: { revalidate: 60 } }),
     ]);
 
     const [wordsData, slidesData]: [WordsData, SlidesData] = await Promise.all([

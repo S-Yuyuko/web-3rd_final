@@ -8,7 +8,7 @@ export const revalidate = 60;
 // Function to fetch about information
 const fetchAboutInfo = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/about`, { next: { revalidate: 60 } });
+    const res = await fetch(`api/about`, { next: { revalidate: 60 } });
     if (!res.ok) {
       throw new Error('Failed to fetch about information');
     }

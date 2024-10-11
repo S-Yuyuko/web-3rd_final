@@ -50,7 +50,7 @@ const ProfessionalList: React.FC<ProfessionalListProps> = ({ professionals }) =>
           id="sort-select"
           value={sortCriterion}
           onChange={handleSortChange}
-          className="p-2 border rounded"
+          className="p-2 border rounded text-black dark:text-white bg-white dark:bg-black border-gray-300 dark:border-gray-600"
         >
           <option value="title">Title</option>
           <option value="startTime">Start Time</option>

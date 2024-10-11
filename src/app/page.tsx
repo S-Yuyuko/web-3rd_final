@@ -1,20 +1,42 @@
-import SlideShow from '../components/home/SlideShow';
+import SlideShow from '@/components/home/SlideShow';
 import HomeWords from '@/components/home/HomeWords';
 import BubbleEffect from '@/components/effect/BubbleEffect';
 
-// Static Generation with Incremental Static Regeneration (ISR)
-const fetchData = async () => {
+// Revalidate every 60 seconds for ISR
+export const revalidate = 60;
+
+// Define the type for the slide picture
+interface Picture {
+  name: string;
+  path: string;
+}
+
+interface WordsData {
+  words?: {
+    title: string;
+    description: string;
+  };
+}
+
+interface SlidesData {
+  pictures: Picture[];
+}
+
+async function fetchData() {
   try {
     const [wordsResponse, slidesResponse] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords`, { next: { revalidate: 60 } }), // ISR with revalidate every 60 seconds
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords`, { next: { revalidate: 60 } }),
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/slides`, { next: { revalidate: 60 } }),
     ]);
 
-    const [wordsData, slidesData] = await Promise.all([wordsResponse.json(), slidesResponse.json()]);
+    const [wordsData, slidesData]: [WordsData, SlidesData] = await Promise.all([
+      wordsResponse.json(),
+      slidesResponse.json(),
+    ]);
 
     const title = wordsData.words?.title || 'Default Title';
     const description = wordsData.words?.description || 'Default description';
-    const pictures = slidesData.pictures.map((picture: { name: string; path: string }) => ({
+    const pictures = slidesData.pictures.map((picture: Picture) => ({
       name: picture.name,
       path: picture.path,
     }));
@@ -26,7 +48,7 @@ const fetchData = async () => {
   }
 }
 
-export default async function Home() {
+export default async function HomePage() {
   const { title, description, pictures } = await fetchData();
 
   return (

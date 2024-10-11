@@ -99,7 +99,7 @@ export async function PUT(req: NextRequest) {
         const filePath = path.join(uploadDir, uniqueFileName);
 
         await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
-        return `uploads/professionals/${uniqueFileName}`;
+        return `/uploads/professionals/${uniqueFileName}`;
       })
     );
 

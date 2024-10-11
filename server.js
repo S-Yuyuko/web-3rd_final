@@ -24,13 +24,14 @@ const httpsOptions = {
   ca: readFileSync('/etc/letsencrypt/live/wuwarren.com/chain.pem'),
 };
 
-// Prepare and start the Next.js server
 app.prepare().then(() => {
   console.log(`Next.js app is prepared in ${dev ? 'development' : 'production'} mode.`);
   
   // Create HTTPS server with SSL certificates
   createServer(httpsOptions, (req, res) => {
     const parsedUrl = parse(req.url || '', true);
+
+    // Handle all requests with Next.js
     handle(req, res, parsedUrl);
   }).listen(443, (err) => {
     if (err) throw err;

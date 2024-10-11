@@ -1,10 +1,12 @@
 import ProjectList from '@/components/experiences/ProjectList';
 import ProfessionalList from '@/components/experiences/ProfessionalList';
 import ExperienceWord from '@/components/experiences/ExperienceWord';
-import SnowEffect from '@/components/effect/SnowEffect'; // Import the SnowEffect component
+import SnowEffect from '@/components/effect/SnowEffect';
 
-// Fetch all data concurrently
-const fetchAllData = async () => {
+// Revalidate every 60 seconds for ISR
+export const revalidate = 60;
+
+async function fetchAllData() {
   try {
     const [projectsRes, professionalsRes, experienceWordRes] = await Promise.all([
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/summaries`, { next: { revalidate: 60 } }),
@@ -12,6 +14,7 @@ const fetchAllData = async () => {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/experiencewords`, { next: { revalidate: 60 } }),
     ]);
 
+    // Check if any of the responses are not okay
     if (!projectsRes.ok || !professionalsRes.ok || !experienceWordRes.ok) {
       throw new Error('Failed to fetch data');
     }
@@ -35,9 +38,9 @@ const fetchAllData = async () => {
       experienceWord: { title: 'Default Title', description: 'Default Description' },
     };
   }
-};
+}
 
-export default async function Experiences() {
+export default async function ExperiencesPage() {
   const { projects, professionals, experienceWord } = await fetchAllData();
 
   return (

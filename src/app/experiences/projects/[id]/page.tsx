@@ -2,13 +2,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import MediaGallery from '@/components/experiences/MediaGallery';
-import RainEffect from '@/components/effect/RainEffect'; // Ensure this path is correct
+import RainEffect from '@/components/effect/RainEffect';
+import DescriptionRenderer from '@/components/experiences/DescriptionRenderer'; // Import the new component
 
-// Function to fetch project data from the API
 async function fetchProjectData(id: string) {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`, {
-      cache: 'no-store', // Always fetch fresh data, disabling any caching
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -16,8 +16,7 @@ async function fetchProjectData(id: string) {
       return null;
     }
 
-    const projectData = await res.json();
-    return projectData;
+    return await res.json();
   } catch (error) {
     console.error('Error fetching project data:', error);
     return null;
@@ -25,24 +24,19 @@ async function fetchProjectData(id: string) {
 }
 
 export default async function ProjectPage({ params }: { params: { id: string } }) {
-  // Fetch project data dynamically for each request
   const projectData = await fetchProjectData(params.id);
 
-  // Handle case where no project data is found
   if (!projectData) {
     notFound();
   }
 
-  // Destructure project details
   const { title, startTime, endTime, skills, link, description, media } = projectData;
 
   return (
     <div className="relative overflow-hidden">
-      {/* New Rain Effect */}
       <RainEffect />
 
-      <div className="p-6 max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 relative">
-        {/* Left-Aligned Back Arrow Section */}
+      <div className="p-6 max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 mb-10 relative">
         <div className="flex justify-start mb-4">
           <Link
             href="/experiences"
@@ -53,12 +47,10 @@ export default async function ProjectPage({ params }: { params: { id: string } }
           </Link>
         </div>
 
-        {/* Title Section */}
         <h1 className="text-4xl font-bold mb-4 text-center text-gray-800 dark:text-gray-100">
           {title}
         </h1>
 
-        {/* Date and Skills Section */}
         <div className="flex justify-between items-center mb-6 text-gray-600 dark:text-gray-400 text-sm">
           <p>
             <span className="font-semibold">Start: </span>
@@ -70,18 +62,13 @@ export default async function ProjectPage({ params }: { params: { id: string } }
           </p>
         </div>
 
-        {/* Description Section */}
-        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-line break-words">
-          {description}
-        </p>
+        <DescriptionRenderer content={description} />
 
-        {/* Skills Section */}
         <div className="mb-6">
           <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">Skills Used</h3>
           <p className="text-gray-700 dark:text-gray-300">{skills}</p>
         </div>
 
-        {/* Link Section */}
         {link && (
           <div className="mb-6">
             <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">Project Link</h3>
@@ -96,7 +83,6 @@ export default async function ProjectPage({ params }: { params: { id: string } }
           </div>
         )}
 
-        {/* Media Gallery Section */}
         {media && media.length > 0 && <MediaGallery mediaUrls={media} />}
       </div>
     </div>

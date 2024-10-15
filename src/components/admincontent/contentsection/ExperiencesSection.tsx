@@ -1,4 +1,6 @@
 import { FaPen, FaTrashAlt } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+
 import { ChangeEvent, useMemo } from 'react';
 import { ExperiencesProvider, useExperiencesContext } from '@/contexts/ExperiencesContext';
 import { NotificationProvider } from '@/contexts/NotificationContext';
@@ -124,31 +126,56 @@ const ProjectForm = ({
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-800 dark:text-gray-100">Media Previews:</label>
-        <div className="flex flex-wrap gap-2">
-          {project.media.map((preview, index) => (
-            <div key={index} className="relative">
-              <Image
-                src={handleMediaPreview(preview)}
-                alt={`media preview ${index}`}
-                width={96}
-                height={96}
-                className="object-cover rounded-md"
-              />
-
-              <button
-                onClick={() =>
-                  setProject({
-                    ...project,
-                    media: project.media.filter((_, i) => i !== index),
-                  })
-                }
-                className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-              >
-                &times;
-              </button>
-            </div>
-          ))}
+        <label className="block text-gray-800 dark:text-gray-100">
+          Media Previews:
+        </label>
+        <div className="overflow-x-auto">
+          <table className="w-full border border-collapse border-gray-400 dark:border-gray-600 table-fixed">
+            <thead>
+              <tr className="border border-gray-400 dark:border-gray-600">
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">Image</th>
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">URL</th>
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {project.media &&
+                project.media.map((preview, index) => (
+                  <tr
+                    key={index}
+                    className="border border-gray-400 dark:border-gray-600"
+                    style={{ height: '120px' }}
+                  >
+                    <td className="p-2 border border-gray-400 dark:border-gray-600">
+                      <div className="flex justify-center items-center h-full">
+                        <img
+                          src={handleMediaPreview(preview)}
+                          alt={`media preview ${index}`}
+                          className="object-cover rounded-md"
+                          style={{ width: '96px', height: '96px' }}
+                        />
+                      </div>
+                    </td>
+                    <td className="border p-2 text-center border-gray-400 dark:border-gray-600 break-all">
+                      {handleMediaPreview(preview) || 'No URL available'}
+                    </td>
+                    <td className="border p-2 text-center border-gray-400 dark:border-gray-600">
+                      <button
+                        onClick={() =>
+                          setProject({
+                            ...project,
+                            media: project.media.filter((_, i) => i !== index),
+                          })
+                        }
+                        className="items-center justify-center text-red-500 hover:text-red-700 focus:outline-none"
+                      >
+                        <MdDelete className="inline-block w-5 h-5 mr-1" /> Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <div className="mb-2">
@@ -255,30 +282,56 @@ const ProfessionalForm = ({
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-800 dark:text-gray-100">Media Previews:</label>
-        <div className="flex flex-wrap gap-2">
-          {professional.media && professional.media.map((preview, index) => (
-            <div key={index} className="relative">
-              <Image
-                src={handleMediaPreview(preview)}
-                alt={`media preview ${index}`}
-                width={96}
-                height={96}
-                className="object-cover rounded-md"
-              />
-              <button
-                onClick={() =>
-                  setProfessional({
-                    ...professional,
-                    media: professional.media.filter((_, i) => i !== index),
-                  })
-                }
-                className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
-              >
-                &times;
-              </button>
-            </div>
-          ))}
+        <label className="block text-gray-800 dark:text-gray-100">
+          Media Previews:
+        </label>
+        <div className="overflow-x-auto">
+          <table className="w-full border border-collapse border-gray-400 dark:border-gray-600 table-fixed">
+            <thead>
+              <tr className="border border-gray-400 dark:border-gray-600">
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">Image</th>
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">URL</th>
+                <th className="p-4 border border-gray-400 dark:border-gray-600 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {professional.media &&
+                professional.media.map((preview, index) => (
+                  <tr
+                    key={index}
+                    className="border border-gray-400 dark:border-gray-600"
+                    style={{ height: '120px' }}
+                  >
+                    <td className="p-2 border border-gray-400 dark:border-gray-600">
+                      <div className="flex justify-center items-center h-full">
+                        <img
+                          src={handleMediaPreview(preview)}
+                          alt={`media preview ${index}`}
+                          className="object-cover rounded-md"
+                          style={{ width: '96px', height: '96px' }}
+                        />
+                      </div>
+                    </td>
+                    <td className="border p-2 text-center border-gray-400 dark:border-gray-600 break-all">
+                      {handleMediaPreview(preview) || 'No URL available'}
+                    </td>
+                    <td className="border p-2 text-center border-gray-400 dark:border-gray-600">
+                      <button
+                        onClick={() =>
+                          setProfessional({
+                            ...professional,
+                            media: professional.media.filter((_, i) => i !== index),
+                          })
+                        }
+                        className="items-center justify-center text-red-500 hover:text-red-700 focus:outline-none"
+                      >
+                        <MdDelete className="inline-block w-5 h-5 mr-1" /> Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <div className="mb-2">
@@ -347,9 +400,9 @@ const ExperiencesSectionContent = ({ activeSubSection }: ExperiencesSectionProps
   return (
     <div className="h-full">
       {activeSubSection === 'experienceWords' ? (
-        <div>
-            <h2 className="text-2xl font-bold mb-2">Experience Words</h2>
-            <div className="mt-4">
+        <>
+          <h2 className="text-2xl font-bold mb-2">Experience Words</h2>
+          <div className="mt-4">
             <label className="block mb-2 text-gray-800 dark:text-gray-100">Title:</label>
               
             <input 
@@ -370,8 +423,8 @@ const ExperiencesSectionContent = ({ activeSubSection }: ExperiencesSectionProps
             <button onClick={handleSaveExperienceWord} className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
               Save Experience Words
             </button>
-            </div>
-        </div>
+          </div>
+        </>
       ) : activeSubSection === 'projectExperiences' ? (
         <>
           <h2 className="text-2xl font-bold mb-4">Project Experiences</h2>
@@ -382,7 +435,7 @@ const ExperiencesSectionContent = ({ activeSubSection }: ExperiencesSectionProps
             {isNewProjectVisible ? 'Cancel New Project' : 'Add New Project'}
           </button>
 
-          <div className="overflow-y-auto h-[500px]">
+          <div className="overflow-y-auto h-[650px]">
             {isNewProjectVisible && (
               <ProjectForm
                 project={newProject}
@@ -449,7 +502,7 @@ const ExperiencesSectionContent = ({ activeSubSection }: ExperiencesSectionProps
             {isNewProfessionalVisible ? 'Cancel New Professional' : 'Add New Professional'}
           </button>
       
-          <div className="overflow-y-auto h-[500px]">
+          <div className="overflow-y-auto h-[650px]">
             {isNewProfessionalVisible && (
               <ProfessionalForm
                 professional={newProfessional} // Cast if necessary

@@ -35,7 +35,7 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
     switch (activeSubSection) {
       case 'homeWords':
         return (
-          <div>
+          <>
             <h2 className="text-2xl font-bold mb-2">Home Words</h2>
             <div className="mt-4">
               <label className="block mb-2 text-gray-800 dark:text-gray-100">Title:</label>
@@ -59,12 +59,12 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
                 Save Home Words
               </button>
             </div>
-          </div>
+          </>
         );
       
       case 'slidePicture':
         return (
-          <div>
+          <>
             <h2 className="text-2xl font-bold mb-2">Slider Picture</h2>
             <div className="mt-4">
               <label className="block mb-2 text-gray-800 dark:text-gray-100">Upload Picture:</label>
@@ -122,9 +122,9 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
                       <td className="border px-4 py-2 align-middle">
                         <button
                           onClick={() => handleDeletePicture(picture.name)}
-                          className="flex items-center justify-center text-red-500 hover:text-red-700 focus:outline-none"
+                          className="items-center justify-center text-red-500 hover:text-red-700 focus:outline-none"
                         >
-                          <FaTrashAlt className="mr-2" /> Delete
+                          <FaTrashAlt className="inline-block w-5 h-5 mr-1" /> Delete
                         </button>
                       </td>
                     </tr>
@@ -132,15 +132,15 @@ const HomeSectionContent = ({ activeSubSection }: { activeSubSection: string }) 
                 </tbody>
               </table>
             </div>
-          </div>
+          </>
         );
       
       default:
         return (
-          <div>
+          <>
             <h1 className="text-3xl font-bold mb-4">Home</h1>
             <p>Select a subcategory from the catalog.</p>
-          </div>
+          </>
         );
     }
   };

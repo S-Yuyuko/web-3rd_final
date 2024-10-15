@@ -10,7 +10,7 @@ const ContactSectionContent = () => {
   } = useContactContext();
 
   return (
-    <div>
+    <>
       <h2 className="text-2xl font-bold mb-2">Contact Section</h2>
       <div className="mt-4">
         <label className="block mb-2 text-gray-800 dark:text-gray-100">Phone Number:</label>
@@ -51,7 +51,7 @@ const ContactSectionContent = () => {
           Save Contact Info
         </button>
       </div>
-    </div>
+    </>
   );
 };
 

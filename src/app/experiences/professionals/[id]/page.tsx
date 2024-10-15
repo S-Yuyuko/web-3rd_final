@@ -41,7 +41,7 @@ export default async function ProfessionalPage({ params }: { params: { id: strin
       {/* New Rain Effect */}
       <RainEffect />
 
-      <div className="p-6 max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 relative">
+      <div className="p-6 max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md mt-10 mb-10 relative">
         {/* Left-Aligned Back Arrow Section */}
         <div className="flex justify-start mb-4">
           <Link

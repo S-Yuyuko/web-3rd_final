@@ -53,10 +53,8 @@ export default function ProfessionalCard({ professional }: ProfessionalCardProps
 
         {/* Bottom Section with Title, Company, Start and End Time */}
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-2">{professional.title}</h2>
-          {professional.company && (
-            <p className="text-sm text-gray-600">Company: {professional.company}</p>
-          )}
+          <h2 className="text-xl font-semibold mb-2 truncate">{professional.title}</h2>
+          <p className="text-sm text-gray-600"></p>
           <p className="text-sm text-gray-600">
             Start: {formatDate(professional.startTime)} | End: {formatDate(professional.endTime)}
           </p>

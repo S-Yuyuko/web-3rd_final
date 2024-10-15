@@ -7,7 +7,7 @@ import RainEffect from '@/components/effect/RainEffect'; // Ensure this path is 
 // Function to fetch professional data from the API
 async function fetchProfessionalData(id: string) {
   try {
-    const res = await fetch(`api/professionals/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/professionals/${id}`, {
       cache: 'no-store', // Always fetch fresh data, disabling caching
     });
 
@@ -78,7 +78,7 @@ export default async function ProfessionalPage({ params }: { params: { id: strin
         </div>
 
         {/* Description Section */}
-        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-line break-words">
           {description}
         </p>
 

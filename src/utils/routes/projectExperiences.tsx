@@ -15,7 +15,7 @@ export type Project = {
 // Fetch all projects
 export const fetchProjects = async (): Promise<Project[] | null> => {
   try {
-    const { data } = await axios.get<Project[]>(`api/projects`);
+    const { data } = await axios.get<Project[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`);
     return data;
   } catch (error) {
     handleAxiosError(error, 'Failed to fetch projects.');
@@ -27,7 +27,7 @@ export const fetchProjects = async (): Promise<Project[] | null> => {
 export const addProject = async (project: Partial<Project>, mediaFiles: File[]): Promise<Project | null> => {
   try {
     const formData = createProjectFormData(project, mediaFiles);
-    const { data } = await axios.post<Project>(`api/projects`, formData, {
+    const { data } = await axios.post<Project>(`${process.env.NEXT_PUBLIC_API_URL}/api/projects`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -56,7 +56,7 @@ export const updateProject = async (id: string, project: Partial<Project>, media
     await appendBlobUrlsToFormData(blobUrls, formData);
     console.log(project, '||', mediaFiles)
     // Make the PUT request to update the project
-    const { data } = await axios.put<Project>(`api/projects/${id}`, formData, {
+    const { data } = await axios.put<Project>(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

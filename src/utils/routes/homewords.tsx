@@ -6,7 +6,7 @@ export const addHomeWord = async (
 ): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.post(`api/homewords`, word, {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords`, word, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {
@@ -19,7 +19,7 @@ export const addHomeWord = async (
 export const getHomeWords = async (): Promise<any[]> => {
   try {
     // Use NEXT_PUBLIC_API_URL for API calls
-    const response = await axios.get(`api/homewords`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords`);
     return response.data.words; // Assuming backend returns { words: [...] }
   } catch (error) {
     throw new Error('Failed to fetch home words.');
@@ -33,7 +33,7 @@ export const updateHomeWord = async (
 ): Promise<void> => {
   try {
     // Send JSON data instead of FormData
-    await axios.put(`api/homewords/${id}`, word, {
+    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/homewords/${id}`, word, {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error) {

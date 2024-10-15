@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProfessionalCard from '@/components/experiences/ProfessionalCard';
 
 interface Professional {
@@ -20,7 +20,11 @@ interface ProfessionalListProps {
 
 const ProfessionalList: React.FC<ProfessionalListProps> = ({ professionals }) => {
   const [sortedProfessionals, setSortedProfessionals] = useState<Professional[]>(professionals);
-  const [sortCriterion, setSortCriterion] = useState<'title' | 'startTime'>('title');
+
+  useEffect(() => {
+    const sorted = [...professionals].sort((a, b) => a.title.localeCompare(b.title));
+    setSortedProfessionals(sorted);
+  }, [professionals]);
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
@@ -38,7 +42,6 @@ const ProfessionalList: React.FC<ProfessionalListProps> = ({ professionals }) =>
       sorted = professionals; // Reset to original order if "none" selected
     }
 
-    setSortCriterion(value as 'title' | 'startTime');
     setSortedProfessionals(sorted);
   };
 
@@ -48,7 +51,6 @@ const ProfessionalList: React.FC<ProfessionalListProps> = ({ professionals }) =>
         <label htmlFor="sort-select" className="mr-2">Sort by:</label>
         <select
           id="sort-select"
-          value={sortCriterion}
           onChange={handleSortChange}
           className="p-2 border rounded text-black dark:text-white bg-white dark:bg-black border-gray-300 dark:border-gray-600"
         >

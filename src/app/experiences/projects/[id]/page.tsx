@@ -7,7 +7,7 @@ import RainEffect from '@/components/effect/RainEffect'; // Ensure this path is 
 // Function to fetch project data from the API
 async function fetchProjectData(id: string) {
   try {
-    const res = await fetch(`api/projects/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projects/${id}`, {
       cache: 'no-store', // Always fetch fresh data, disabling any caching
     });
 
@@ -71,7 +71,7 @@ export default async function ProjectPage({ params }: { params: { id: string } }
         </div>
 
         {/* Description Section */}
-        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+        <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6 whitespace-pre-line break-words">
           {description}
         </p>
 

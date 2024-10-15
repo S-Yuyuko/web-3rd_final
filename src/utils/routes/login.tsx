@@ -4,7 +4,7 @@ import axios from 'axios';
 export const loginRoute = async (account: string, password: string) => {
   try {
     // Use NEXT_PUBLIC_API_URL for API calls
-    const response = await axios.post(`api/auth/login`, {
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`, {
       account,
       password,
     });

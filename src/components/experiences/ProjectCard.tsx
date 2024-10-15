@@ -54,7 +54,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
         {/* Bottom Section with Title, Start and End Time */}
         <div className="p-4">
-          <h2 className="text-xl font-semibold mb-2">{project.title}</h2>
+          <h2 className="text-xl font-semibold mb-2 truncate">{project.title}</h2>
+          <p className="text-sm text-gray-600"></p>
           <p className="text-sm text-gray-600">
             Start: {formatDate(project.startTime)} | End: {formatDate(project.endTime)}
           </p>

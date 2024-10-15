@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 // Fetch all admins
 export const fetchAdmins = async () => {
   try {
-    const response = await axios.get(`api/admins`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admins`, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -22,7 +22,7 @@ export const fetchAdmins = async () => {
 export const addAdmin = async (account: string, password: string) => {
   try {
     const response = await axios.post(
-      `api/admins`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admins`,
       { account, password },
       {
         headers: {
@@ -44,7 +44,7 @@ export const addAdmin = async (account: string, password: string) => {
 export const updateAdmin = async (account: string, password: string) => {
   try {
     const response = await axios.put(
-      `api/admins/${account}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admins/${account}`,
       { password },
       {
         headers: {
@@ -65,7 +65,7 @@ export const updateAdmin = async (account: string, password: string) => {
 // Delete an admin by account
 export const deleteAdmin = async (account: string) => {
   try {
-    await axios.delete(`api/admins/${account}`, {
+    await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/admins/${account}`, {
       headers: {
         'Content-Type': 'application/json',
       },

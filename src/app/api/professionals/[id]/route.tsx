@@ -87,9 +87,27 @@ export async function PUT(req: NextRequest) {
     const existingMediaInDatabase = rows[0].media;
     const mediaToDelete = existingMediaInDatabase.filter((media: string) => !remainingMedia.includes(media));
 
+    // Remove the media files that are no longer needed
+    await Promise.all(
+      mediaToDelete.map(async (mediaPath: string) => {
+        // Extract the filename from the API path
+        const fileName = mediaPath.split('/').pop(); // Get the file name
+        if (!fileName) return;
+
+        // Construct the file path in `src/public/uploads/professionals`
+        const filePath = path.join(process.cwd(), 'src/public/professionals', fileName);
+
+        try {
+          await fs.unlink(filePath); // Attempt to delete the file
+        } catch (err) {
+          console.error(`Error deleting file: ${filePath}`, err);
+        }
+      })
+    );
+
     // Handle new media file uploads
     const mediaFiles = formData.getAll('media').filter(item => item instanceof File) as File[];
-    const uploadDir = path.join(process.cwd(), 'public/uploads/professionals');
+    const uploadDir = path.join(process.cwd(), 'src/public/professionals');
     await ensureDirectoryExists(uploadDir);
 
     const newMediaPaths = await Promise.all(
@@ -99,24 +117,13 @@ export async function PUT(req: NextRequest) {
         const filePath = path.join(uploadDir, uniqueFileName);
 
         await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
-        return `/uploads/professionals/${uniqueFileName}`;
+        // Return the new media path as an API route
+        return `/api/professionals/file/${uniqueFileName}`;
       })
     );
 
     // Combine remaining media and newly uploaded media
     const combinedMediaPaths = [...remainingMedia, ...newMediaPaths];
-
-    // Delete removed media files from the server
-    await Promise.all(
-      mediaToDelete.map(async (media: string) => {
-        const filePath = path.join(process.cwd(), 'public', media);
-        try {
-          await fs.unlink(filePath);
-        } catch (err) {
-          console.error(`Error deleting file: ${filePath}`, err);
-        }
-      })
-    );
 
     // Update professional in the database
     const [result] = await pool.query<ResultSetHeader>(
@@ -136,6 +143,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to update professional' }, { status: 500 });
   }
 }
+
 
 // DELETE function to remove a professional and associated media files
 export async function DELETE(req: NextRequest) {
@@ -161,11 +169,17 @@ export async function DELETE(req: NextRequest) {
     // Delete associated media files from the server
     await Promise.all(
       professionalMedia.map(async (mediaPath: string) => {
-        const filePath = path.join(process.cwd(), 'public', mediaPath);
+        // Extract the filename from the API path, assuming the format is `/api/professionalFiles/[filename]`
+        const fileName = mediaPath.split('/').pop(); // Get the file name from the path
+        if (!fileName) return; // In case the path doesn't contain a valid file name
+
+        // Construct the full path to the file in the `src/public/uploads/professionals` directory
+        const filePath = path.join(process.cwd(), 'src/public/professionals', fileName);
+
         try {
-          await fs.unlink(filePath);
+          await fs.unlink(filePath); // Attempt to delete the file
         } catch (err) {
-          console.error(`Error deleting media file: ${filePath}`, err);
+          console.error(`Error deleting file: ${filePath}`, err);
         }
       })
     );
@@ -186,3 +200,4 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to delete professional' }, { status: 500 });
   }
 }
+

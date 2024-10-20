@@ -89,7 +89,7 @@ export async function PUT(req: NextRequest) {
 
     // Handle new media file uploads
     const mediaFiles = formData.getAll('media').filter(item => item instanceof File) as File[];
-    const uploadDir = path.join(process.cwd(), 'public/uploads/projects');
+    const uploadDir = path.join(process.cwd(), 'src/public/projects'); // Ensure the correct path
     await ensureDirectoryExists(uploadDir);
 
     const newMediaPaths = await Promise.all(
@@ -99,7 +99,7 @@ export async function PUT(req: NextRequest) {
         const filePath = path.join(uploadDir, uniqueFileName);
 
         await fs.writeFile(filePath, Buffer.from(await file.arrayBuffer()));
-        return `/uploads/projects/${uniqueFileName}`;
+        return `/api/projects/file/${uniqueFileName}`; // Use API route for serving files
       })
     );
 
@@ -109,7 +109,10 @@ export async function PUT(req: NextRequest) {
     // Delete removed media files from the server
     await Promise.all(
       mediaToDelete.map(async (media: string) => {
-        const filePath = path.join(process.cwd(), 'public', media);
+        const fileName = media.split('/').pop(); // Extract filename from path
+        if (!fileName) return;
+
+        const filePath = path.join(process.cwd(), 'src/public/projects', fileName); // Adjust the file path
         try {
           await fs.unlink(filePath);
         } catch (err) {
@@ -137,6 +140,7 @@ export async function PUT(req: NextRequest) {
   }
 }
 
+
 // DELETE function to remove a project and associated media files
 export async function DELETE(req: NextRequest) {
   const id = req.nextUrl.pathname.split('/').pop();
@@ -161,7 +165,10 @@ export async function DELETE(req: NextRequest) {
     // Delete associated media files from the server
     await Promise.all(
       projectMedia.map(async (mediaPath: string) => {
-        const filePath = path.join(process.cwd(), 'public', mediaPath);
+        const fileName = mediaPath.split('/').pop(); // Extract filename from path
+        if (!fileName) return;
+
+        const filePath = path.join(process.cwd(), 'src/public/projects', fileName); // Adjust the file path
         try {
           await fs.unlink(filePath);
         } catch (err) {
@@ -186,3 +193,4 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
 }
+

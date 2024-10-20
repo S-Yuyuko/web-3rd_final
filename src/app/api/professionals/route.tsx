@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     const mediaFiles = formData.getAll('media').filter(item => item instanceof File) as File[]; // Filter to only include File objects
 
     // Define the directory for file uploads
-    const uploadDir = path.join(process.cwd(), 'public/uploads/professionals');
+    const uploadDir = path.join(process.cwd(), 'src/public/professionals');
     await ensureDirectoryExists(uploadDir); // Ensure the directory exists
 
     // Array to store the paths of uploaded media files
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
         await fs.writeFile(filePath, fileBuffer);
 
         // Store relative file path (for public access)
-        const relativeFilePath = `/uploads/professionals/${uniqueFileName}`;
+        const relativeFilePath = `/api/professionals/file/${uniqueFileName}`;
         mediaPaths.push(relativeFilePath);
       });
 

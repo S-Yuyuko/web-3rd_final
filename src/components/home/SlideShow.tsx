@@ -56,21 +56,35 @@ const SlideShow = ({ pictures }: SlideShowProps) => {
   const currentSlide = useMemo(() => {
     if (!pictures[currentIndex]) return null;
 
+    const isVideo = pictures[currentIndex].path.endsWith('.mp4') || pictures[currentIndex].path.endsWith('.mov') || pictures[currentIndex].path.endsWith('.avi'); // Add more extensions as needed
+
     return (
       <div className="absolute inset-0">
-        <Image
-          src={pictures[currentIndex].path}
-          alt={pictures[currentIndex].name}
-          fill
-          className="object-cover" // Center-cropped image
-          priority
-        />
+        {isVideo ? (
+          <video
+            controls
+            muted
+            loop
+            className="object-cover w-full h-full"
+          >
+            <source src={pictures[currentIndex].path} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <Image
+            src={pictures[currentIndex].path}
+            alt={pictures[currentIndex].name}
+            fill
+            className="object-cover" // Center-cropped image
+            priority
+          />
+        )}
       </div>
     );
   }, [currentIndex, pictures]);
 
   if (pictures.length === 0) {
-    return <div>No pictures available</div>;
+    return <div>No media available</div>;
   }
 
   return (

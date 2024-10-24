@@ -61,12 +61,26 @@ const ProjectForm = ({
   handleMediaChange,
 }: ProjectFormProps) => {
   const handleMediaPreview = (preview: string | File) => {
-    // Check if the media is from the server or locally uploaded (blob URL)
     if (typeof preview === 'string') {
-      return preview
+      // If the preview is a URL (for existing media on the server)
+      return preview;
     }
-    return URL.createObjectURL(preview); // Preview for File objects
+    return URL.createObjectURL(preview); // For locally uploaded File objects
   };
+  
+  const isVideo = (file: string | File) => {
+    if (typeof file === 'string') {
+      // Assume video if URL ends with video extensions (as fallback for remote media)
+      const videoExtensions = ['.mp4', '.mov', '.avi', '.webm', '.ogg'];
+      return videoExtensions.some(ext => file.toLowerCase().endsWith(ext));
+    }
+    if (file instanceof File) {
+      // Check the MIME type of the uploaded file
+      return file.type.startsWith('video/');
+    }
+    return false;
+  };
+  
 
   return (
     <div className="mb-4">
@@ -148,13 +162,26 @@ const ProjectForm = ({
                   >
                     <td className="p-2 border border-gray-400 dark:border-gray-600">
                       <div className="flex justify-center items-center h-full">
-                        <img
-                          src={handleMediaPreview(preview)}
-                          alt={`media preview ${index}`}
-                          className="object-cover rounded-md"
-                          style={{ width: '96px', height: '96px' }}
-                        />
-                      </div>
+                      {isVideo(preview) ? (
+                          <video
+                            controls
+                            width={96}
+                            height={96}
+                            className="object-cover rounded-md"
+                          >
+                            <source src={handleMediaPreview(preview)} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
+                          <Image
+                            src={handleMediaPreview(preview)}
+                            alt={`media preview ${index}`}
+                            width={96}
+                            height={96}
+                            className="object-cover rounded-md"
+                          />
+                        )}
+                        </div>
                     </td>
                     <td className="border p-2 text-center border-gray-400 dark:border-gray-600 break-all">
                       {handleMediaPreview(preview) || 'No URL available'}
@@ -217,13 +244,26 @@ const ProfessionalForm = ({
   handleMediaChange,
 }: ProfessionalFormProps) => {
   const handleMediaPreview = (preview: string | File) => {
-    // Check if the media is from the server or locally uploaded (blob URL)
     if (typeof preview === 'string') {
-      return preview
+      // If the preview is a URL (for existing media on the server)
+      return preview;
     }
-    return URL.createObjectURL(preview); // Preview for File objects
+    return URL.createObjectURL(preview); // For locally uploaded File objects
   };
-
+  
+  const isVideo = (file: string | File) => {
+    if (typeof file === 'string') {
+      // Assume video if URL ends with video extensions (as fallback for remote media)
+      const videoExtensions = ['.mp4', '.mov', '.avi', '.webm', '.ogg'];
+      return videoExtensions.some(ext => file.toLowerCase().endsWith(ext));
+    }
+    if (file instanceof File) {
+      // Check the MIME type of the uploaded file
+      return file.type.startsWith('video/');
+    }
+    return false;
+  };
+  
   return (
     <div className="mb-4">
       <div className="mb-2">
@@ -304,12 +344,25 @@ const ProfessionalForm = ({
                   >
                     <td className="p-2 border border-gray-400 dark:border-gray-600">
                       <div className="flex justify-center items-center h-full">
-                        <img
-                          src={handleMediaPreview(preview)}
-                          alt={`media preview ${index}`}
-                          className="object-cover rounded-md"
-                          style={{ width: '96px', height: '96px' }}
-                        />
+                      {isVideo(preview) ? (
+                          <video
+                            controls
+                            width={96}
+                            height={96}
+                            className="object-cover rounded-md"
+                          >
+                            <source src={handleMediaPreview(preview)} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : (
+                          <Image
+                            src={handleMediaPreview(preview)}
+                            alt={`media preview ${index}`}
+                            width={96}
+                            height={96}
+                            className="object-cover rounded-md"
+                          />
+                        )}
                       </div>
                     </td>
                     <td className="border p-2 text-center border-gray-400 dark:border-gray-600 break-all">

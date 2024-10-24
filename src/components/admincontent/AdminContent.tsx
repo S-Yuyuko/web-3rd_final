@@ -72,11 +72,11 @@ const AdminContent = () => {
                 </li>
                 <li>
                   <button
-                    onClick={() => setActiveSubSection('slidePicture')}
-                    className={`w-full text-left flex items-center space-x-2 ${activeSubSection === 'slidePicture' ? 'text-blue-400' : ''}`}
+                    onClick={() => setActiveSubSection('slideMedia')}
+                    className={`w-full text-left flex items-center space-x-2 ${activeSubSection === 'slideMeida' ? 'text-blue-400' : ''}`}
                   >
                     <FaImage className="text-sm" /> {/* Slider Picture Icon */}
-                    <span>Slide Picture</span>
+                    <span>Slide Meida</span>
                   </button>
                 </li>
               </ul>
